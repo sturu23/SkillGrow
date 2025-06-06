@@ -1,0 +1,136 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container py-4">
+  <h2 class="mb-3 text-center">კურსები</h2>
+
+  {% if not user.is_authenticated %}
+    <div class="text-center mb-4">
+      <p>კურსების სანახავად გთხოვთ 
+        <a href="{% url 'login' %}?next={{ request.path }}">შედით</a> 
+        ან 
+        <a href="{% url 'register' %}?next={{ request.path }}">დარეგისტრირდით</a>.
+      </p>
+    </div>
+  {% endif %}
+
+  <div class="course-grid">
+    {% for course in courses %}
+      <div class="course-card small">
+        {% if course.photo %}
+          <img src="{{ course.photo.url }}" alt="{{ course.title }}" class="course-img small">
+        {% else %}
+          <img src="https://static.vecteezy.com/system/resources/previews/033/176/717/non_2x/online-course-icon-vector.jpg" alt="No image" class="course-img small">
+        {% endif %}
+        <div class="course-content">
+          <h4>{{ course.title }}</h4>
+          <p class="instructor">ინსტ: {{ course.instructor.user.username }}</p>
+          <p class="description">{{ course.description|truncatewords:12 }}</p>
+          <div class="course-footer">
+            <span class="price">${{ course.price }}</span>
+            <a href="#" class="view-btn" onclick="handleViewClick('{{ user.is_authenticated }}', '{{ course.get_absolute_url }}')">ნახვა</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>კურსები ამჟამად ხელმისაწვდომი არ არის.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .course-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .course-card.small {
+    flex: 1 1 220px;
+    max-width: 250px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+  }
+
+  .course-card.small:hover {
+    transform: translateY(-4px);
+  }
+
+  .course-img.small {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
+
+  .course-content {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .course-content h4 {
+    font-size: 1rem;
+    margin: 0 0 6px;
+  }
+
+  .instructor {
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 6px;
+  }
+
+  .description {
+    font-size: 0.8rem;
+    color: #444;
+    margin-bottom: 10px;
+  }
+
+  .course-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .price {
+    font-weight: 600;
+    color: #1a73e8;
+    font-size: 0.9rem;
+  }
+
+  .view-btn {
+    background-color: transparent;
+    border: 1px solid #1a73e8;
+    color: #1a73e8;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    text-decoration: none;
+    transition: 0.2s ease;
+    cursor: pointer;
+  }
+
+  .view-btn:hover {
+    background-color: #1a73e8;
+    color: white;
+  }
+</style>
+
+<script>
+  function handleViewClick(isAuthenticated, courseUrl) {
+    if (isAuthenticated === 'True') {
+      window.location.href = courseUrl;
+    } else {
+      const registerUrl = "{% url 'register' %}?next={{ request.path }}";
+      window.location.href = registerUrl;
+    }
+  }
+</script>
+
+{% endblock %}

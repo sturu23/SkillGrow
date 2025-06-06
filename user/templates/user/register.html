@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <title>რეგისტრაცია</title>
+  <style>
+    :root {
+      --yellow: #FFD700;
+      --black: #000000;
+      --gray: #f5f5f5;
+      --border-color: #e0e0e0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'BPG Glaho', 'Inter', 'Segoe UI', Tahoma, sans-serif;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    nav {
+      background-color: var(--black);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--yellow);
+      letter-spacing: 2px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: var(--yellow);
+      color: var(--black);
+    }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin-left: 15px;
+      z-index: 1100;
+    }
+
+    .burger-line {
+      width: 100%;
+      height: 3px;
+      background-color: var(--yellow);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* Background image container */
+    .background-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.25;
+      z-index: -1;
+      pointer-events: none; /* რომ სურათი არ შეაწუხოს კლიკებს */
+    }
+
+    .register-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      width: 100%;
+      max-width: 460px;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+      margin: 40px auto 80px;
+      flex-grow: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--black);
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .required-star {
+      color: red;
+      margin-left: 2px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 15px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 18px;
+      background-color: #fff;
+      transition: all 0.2s ease-in-out;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--yellow);
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+      outline: none;
+    }
+
+    input[type="submit"] {
+      background-color: var(--yellow);
+      color: var(--black);
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #e6c200;
+      transform: scale(1.02);
+    }
+
+    .errorlist {
+      color: red;
+      margin: -10px 0 10px;
+      font-size: 13px;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    /* New style for the login prompt */
+    .login-prompt {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .login-prompt a {
+      color: var(--yellow);
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+
+    .login-prompt a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 700px) {
+      nav {
+        padding: 15px 20px;
+      }
+
+      nav ul {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        background-color: var(--black);
+        height: calc(100vh - 60px);
+        width: 220px;
+        flex-direction: column;
+        gap: 0;
+        padding-top: 20px;
+        padding-left: 0;
+        margin: 0;
+        border-radius: 0 0 0 8px;
+        box-shadow: -4px 0 8px rgba(0,0,0,0.7);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 1050;
+      }
+
+      nav ul.show {
+        transform: translateX(0);
+      }
+
+      nav ul li {
+        margin: 0;
+      }
+
+      nav ul li a {
+        display: block;
+        padding: 14px 24px;
+        border-bottom: 1px solid #333;
+        font-size: 18px;
+      }
+
+      .burger {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .register-container {
+        padding: 25px;
+        margin: 20px 10px 40px;
+      }
+
+      nav ul {
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">SkillGrow</div>
+    <button class="burger" aria-label="მენიუს გახსნა" aria-expanded="false" aria-controls="nav-menu">
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+    </button>
+    <ul id="nav-menu">
+      <li><a href="/">მთავარი</a></li>
+      <li><a href="/courses/">კურსები</a></li>
+      <li><a href="/about/">ჩვენს შესახებ</a></li>
+      <li><a href="/contact/">კონტაქტი</a></li>
+      <li><a href="/user/register/">რეგისტრაცია</a></li>
+    </ul>
+  </nav>
+
+  <!-- Background image div -->
+  <div class="background-image"></div>
+
+  <div class="register-container">
+    <h2>რეგისტრაცია</h2>
+    <form method="post">
+      {% csrf_token %}
+
+      {{ user_form.non_field_errors }}
+      {{ profile_form.non_field_errors }}
+
+      {% for field in user_form %}
+        <label for="{{ field.id_for_label }}">
+          {{ field.label }}
+          {% if field.field.required %}
+            <span class="required-star">*</span>
+          {% endif %}
+        </label>
+        {{ field }}
+        {{ field.errors }}
+      {% endfor %}
+
+      {% for field in profile_form %}
+        <label for="{{ field.id_for_label }}">
+          {{ field.label }}
+          {% if field.field.required %}
+            <span class="required-star">*</span>
+          {% endif %}
+        </label>
+        {{ field }}
+        {{ field.errors }}
+      {% endfor %}
+
+      <input type="submit" value="დარეგისტრირდი" />
+    </form>
+
+    <div class="login-prompt">
+      გაქვთ უკვე ანგარიში?
+      <a href="/user/login/">შესვლა</a>
+    </div>
+  </div>
+
+  <script>
+    const burger = document.querySelector('.burger');
+    const navMenu = document.getElementById('nav-menu');
+
+    burger.addEventListener('click', () => {
+      const isExpanded = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!isExpanded));
+      navMenu.classList.toggle('show');
+    });
+
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navMenu.classList.contains('show')) {
+          navMenu.classList.remove('show');
+          burger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

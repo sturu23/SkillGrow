@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}მთავარი - SkillGrow{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>ისწავლეთ და განვითარდით ჩვენთან</h1>
+    <p>SkillGrow - თქვენი პლატფორმა SQL-ის შესასწავლად და პროფესიონალურ განვითარებისთვის.</p>
+    <a href="{% url 'courses' %}"><button class="btn-primary">დაიწყე ახლა</button></a>
+</section>
+
+<section class="cards-section">
+    <div class="card">
+        <div class="card-icon">📚</div>
+        <h3>მრავალფეროვანი კურსები</h3>
+        <p>მოგაწვდით SQL-ის სხვადასხვა დონეზე კურსებს დაწყებითიდან მოწინავეამდე.</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">👨‍🏫</div>
+        <h3>პროფესიონალი ლექტორები</h3>
+        <p>პროფესიონალი ლექტორები, რომლებიც დაგეხმარებიან ახალი ნაბიჯების გადადგმაში.</p>
+    </div>
+    <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>სწრაფი და მოქნილი</h3>
+        <p>სწავლების სისტემა, რომელიც თავსებადია თქვენს გრაფიკთან და მასალის სწრაფ ათვისებაში.</p>
+    </div>
+</section>
+{% endblock %}

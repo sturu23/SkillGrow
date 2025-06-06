@@ -1,0 +1,105 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container py-5">
+  <div class="course-detail">
+    <div class="course-image">
+      {% if course.photo %}
+        <img src="{{ course.photo.url }}" alt="{{ course.title }}">
+      {% else %}
+        <img src="https://static.vecteezy.com/system/resources/previews/033/176/717/non_2x/online-course-icon-vector.jpg" alt="No image">
+      {% endif %}
+    </div>
+    <div class="course-info">
+      <h2>{{ course.title }}</h2>
+      <p class="instructor">ინსტრუქტორი: {{ course.instructor.user.username }}</p>
+      <p class="description">{{ course.description }}</p>
+      <div class="course-meta">
+        <span class="price">ფასი: ${{ course.price }}</span>
+        <span class="created">დამატებულია: {{ course.created_at|date:"Y-m-d" }}</span>
+      </div>
+      <a href="#" class="btn-enroll">დარეგისტრირდი</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .course-detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  }
+
+  .course-image img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .course-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .course-info h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    color: #1a1a1a;
+  }
+
+  .instructor {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .course-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9rem;
+    color: #444;
+    margin-bottom: 20px;
+  }
+
+  .btn-enroll {
+    align-self: start;
+    background-color: #1a73e8;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+  }
+
+  .btn-enroll:hover {
+    background-color: #135bc7;
+  }
+
+  @media (max-width: 768px) {
+    .course-detail {
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .course-image img {
+      max-width: 100%;
+    }
+  }
+</style>
+
+{% endblock %}
