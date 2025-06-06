@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$jnqkoq^qk$_+_e3x8wtwp%6c5$4ly%z1=w#_wdz7#%wp_ico7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['skillgrow.onrender.com']
 
 
 # Application definition
